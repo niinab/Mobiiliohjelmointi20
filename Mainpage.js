@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TextInput} from 'react-native';
 import {Card, Button, Header, ListItem } from 'react-native-elements';
+import { NavigationContainer} from'@react-navigation/native';
+import { createStackNavigator} from'@react-navigation/stack';
 
 
 export default function Mainpage({ navigation }) {
 
+
     const [placetype, setPlaceType] = useState([]);
     const [info, setInfo] = useState([]);
+    const [typeCode, setTypeCode] = useState([]);
 
 
     useEffect(() => {
@@ -25,25 +29,19 @@ export default function Mainpage({ navigation }) {
         });
       }
 
-      
-      // const getSelectedPlace = () => {
-      //   fetch(`http://lipas.cc.jyu.fi/api/sports-place-types/${typeCode}`)
-      //   .then(response => response.json())
-      //   .then(data =>  {
-      //     console.log('Success', data)
-      //     setInfo(data)
-      //   })
-      //   .catch((error) => {8
-      //        Alert.alert('Something went wrong:', error.message);
-      //   });
-      // }
-
-      // const getInfo = () => {
-      //   const typeCode = item.typeCode;
-      //   setInfo([...info, {key: item.typeCode}]);
-      // }
-
-  
+      //Miten sport-place-types itemin typeCoden saa lähetettyä eteenpäin, niin että Info sivulle aukeaa sen itemin tiedot? 
+      const getSelectedPlace = () => {
+        fetch(`http://lipas.cc.jyu.fi/api/sports-place-types/${item.typeCode}`)
+        .then(response => response.json())
+        .then(data =>  {
+          console.log('Success', data)
+          setInfo(data)
+        })
+        .catch((error) => {
+             Alert.alert('Something went wrong:', error.message);
+        });
+      }
+ 
       const listSeparator = () => {
         return (
             <View style={{
@@ -54,11 +52,8 @@ export default function Mainpage({ navigation }) {
             }}
             />
         )}
-    
-
 return (
     <View style={styles.container}>
-     
       <View style={styles.listcontainer}>
       <Text style={{ textAlign: 'center', fontSize: 15, padding: 5, fontWeight: 'bold' }}>This is Mainpage </Text>
             
@@ -68,15 +63,16 @@ return (
       renderItem={({ item }) => (
         
         <Card>
-          
           <Card.Title>{item.name}</Card.Title>
           <Card.Divider/>
           <Text style={{marginBottom:10, fontSize: 15}}>{item.name}</Text>
           <Text style={{marginBottom:10, fontSize: 15}}>{item.description}</Text>
-          {/* <Button onPress={getPlaceTypes} /> */}
-          {/* <Button onPress={()  => navigation.navigate('Info', {info: info})} */}
-          {/* title="Lisää tietoa"/> */}
-          </Card>       
+          
+           {/* typeCode itselle tiedoksi toistaiseksi*/}
+          <Text style={{marginBottom: 10, fontSize: 15}}>{item.typeCode}</Text>
+          <Button onPress={()  => navigation.navigate('Info')}
+           title="Lisää tietoa"/>
+          </Card>
       )}
       ItemSeparatorComponent={listSeparator} data={placetype} />
 
@@ -90,14 +86,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
   },
 
   listcontainer: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     backgroundColor: '#81C784',
   }, 
 })

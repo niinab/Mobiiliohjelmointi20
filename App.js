@@ -6,47 +6,43 @@ import { NavigationContainer} from '@react-navigation/native';
 import { Ionicons} from '@expo/vector-icons';
 import Mainpage from './Mainpage';
 import Search from './Search';
-// import Info from './Info';
+import Info from './Info';
 
 
 export default function App() {
 
   const Tab = createBottomTabNavigator();
 
-  // const Stack = createStackNavigator();
+  const Stack = createStackNavigator();
 
   return (
 
+      <NavigationContainer>
 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-{/* 
-    <Button title="Info" onPress={() => navigation.navigate('Info')} />
-      
- //<NavigationContainer>
-     <Stack.Navigator>
-     <Stack.Screen name="Info" component={Info} />
-     </Stack.Navigator> */}
-    
-     <NavigationContainer>
-
+      {/* <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Info" component={Info} />
+      </Stack.Navigator>
+    </NavigationContainer> */}
+  
       <Tab.Navigator 
       screenOptions={({ route }) => ({
       tabBarIcon: ({focused, color, size}) => {
       let iconName;
       if (route.name === 'Mainpage') {
-        iconName = 'md-home';
+        iconName = 'home-sharp';
       } else if (route.name === 'Search') {
         iconName = 'md-search';
       }
-      return <Ionicons name={iconName} size={size} color={color} />;
+      return <Ionicons name={iconName} size={size} color={color} />
         },
         })}>
         <Tab.Screen name="Home" component={Mainpage} />
         <Tab.Screen name="Search" component={Search} />
         </Tab.Navigator> 
       </NavigationContainer>
-     
-</View>
+
+
 
   );
 

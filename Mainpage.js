@@ -1,47 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TextInput} from 'react-native';
-import {Card, Button, Header, ListItem } from 'react-native-elements';
-import { NavigationContainer} from'@react-navigation/native';
-import { createStackNavigator} from'@react-navigation/stack';
-
+import { Card, Button, Header, ListItem } from 'react-native-elements';
 
 export default function Mainpage({ navigation }) {
 
-
-    const [placetype, setPlaceType] = useState([]);
+    const [sportplaces, setSportPlaces] = useState([]);
     const [info, setInfo] = useState([]);
     const [typeCode, setTypeCode] = useState([]);
 
-
     useEffect(() => {
-        getPlaceTypes()
-      }, []);
+      getSportPlaces()
+    }, []);
 
-      const getPlaceTypes = () => {
-        fetch(`http://lipas.cc.jyu.fi/api/sports-place-types`)
+    const getSportPlaces = () => {
+        fetch(`http://lipas.cc.jyu.fi/api/sports-places?fields=www&fields=name&fields=location.city.name&fields=location.coordinates.wgs84&fields=location.address`)
         .then(response => response.json())
         .then(data => {
           console.log('success', data)
-          setPlaceType(data)
+          setSportPlaces(data)
         })
         .catch((error) => {
         Alert.alert('something went wrong', error.message)
         });
       }
 
-      //Miten sport-place-types itemin typeCoden saa lähetettyä eteenpäin, niin että Info sivulle aukeaa sen itemin tiedot? 
-      const getSelectedPlace = () => {
-        fetch(`http://lipas.cc.jyu.fi/api/sports-place-types/${item.typeCode}`)
-        .then(response => response.json())
-        .then(data =>  {
-          console.log('Success', data)
-          setInfo(data)
-        })
-        .catch((error) => {
-             Alert.alert('Something went wrong:', error.message);
-        });
-      }
- 
       const listSeparator = () => {
         return (
             <View style={{
@@ -52,10 +34,10 @@ export default function Mainpage({ navigation }) {
             }}
             />
         )}
-return (
+  return (
     <View style={styles.container}>
       <View style={styles.listcontainer}>
-      <Text style={{ textAlign: 'center', fontSize: 15, padding: 5, fontWeight: 'bold' }}>This is Mainpage </Text>
+      <Text style={{ textAlign: 'center', fontSize: 15, padding: 5, fontWeight: 'bold' }}>Welcome to Mainpage </Text>
             
       <FlatList
       style={{marginLeft: "5%", height: 200}}
@@ -65,16 +47,16 @@ return (
         <Card>
           <Card.Title>{item.name}</Card.Title>
           <Card.Divider/>
-          <Text style={{marginBottom:10, fontSize: 15}}>{item.name}</Text>
-          <Text style={{marginBottom:10, fontSize: 15}}>{item.description}</Text>
+          <Text style={{marginBottom:10, fontSize: 15}}>{item.location.address}, {item.location.city.name}</Text>
+          <Text style={{ marginBottom: 10, color: '#130DDE' }} onPress={() => { Linking.openURL(item.wwww) }}>Visit website</Text>
           
            {/* typeCode itselle tiedoksi toistaiseksi*/}
-          <Text style={{marginBottom: 10, fontSize: 15}}>{item.typeCode}</Text>
-          <Button onPress={()  => navigation.navigate('Info')}
-           title="Lisää tietoa"/>
+          {/* <Text style={{marginBottom: 10, fontSize: 15}}>{item.typeCode}</Text>
+          <Button onPress={()  => navigation.navigate('Info', {name: item.name})}
+           title="Lisää tietoa"/> */}
           </Card>
       )}
-      ItemSeparatorComponent={listSeparator} data={placetype} />
+      ItemSeparatorComponent={listSeparator} data={sportplaces} />
 
     </View>
     </View>
@@ -85,7 +67,7 @@ return (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#49514E',
     justifyContent: 'center',
     padding: 5,
   },
@@ -93,6 +75,6 @@ const styles = StyleSheet.create({
   listcontainer: {
     flex: 1,
     padding: 5,
-    backgroundColor: '#81C784',
+    backgroundColor: '#7BDCB5',
   }, 
 })

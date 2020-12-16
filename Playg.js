@@ -6,38 +6,36 @@ import {Card, Button, Header, ListItem } from 'react-native-elements';
 export default function Playg({ route, navigation }) {
 
     const [mytrain, SetMyTrain] = useState('');
+    const [duration, setDuration] = useState('');
     const [data, setData] = useState([]);
 
 
     const addTrain = () => {
         setData([...data, {key: mytrain}]);
         SetMyTrain('');
-        Alert.alert('Good job, train saved!')
+        Alert.alert('Good job, training saved!')
     }
 
-    // const saveMyTrain = () => {
-    //     Alert.alert('Good job, train saved!');
-    // }
+
 
 return (
     <View style={styles.container}>
       <View style={styles.listcontainer}>
         <TextInput 
             style={styles.textcontainer} 
-            placeholder="Save your train"
+            placeholder="Training"
             onChangeText={mytrain => SetMyTrain(mytrain)}
             value={mytrain}/>
-        <Button onPress={addTrain} title="Save" />
+        <Button onPress={addTrain} title="Save training" />
         
 
-    <View>
+     <View>
         <FlatList
         data={data}
         style={{ marginLeft: "0%", height: 150 }}
         renderItem={({item}) =>
     <Text>{item.key}</Text>}/>
-
-</View>
+    </View>
     </View>
   </View>
   );
@@ -59,9 +57,8 @@ const styles = StyleSheet.create({
       },
       textcontainer: {
         width: 200,
-        marginbottom: 10, 
         textAlign: 'center', 
-        fontSize: 15, 
+        fontSize: 18, 
         padding: 5, 
         fontWeight: 'bold'
       }

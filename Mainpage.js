@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TextInput} from 'react-native';
 import { Card, Button, Header, ListItem } from 'react-native-elements';
+import MapView, {Marker } from 'react-native-maps';
 
 export default function Mainpage({ navigation }) {
 
     const [sportplaces, setSportPlaces] = useState([]);
-    const [info, setInfo] = useState([]);
-    const [typeCode, setTypeCode] = useState([]);
 
     useEffect(() => {
       getSportPlaces()
@@ -24,16 +23,16 @@ export default function Mainpage({ navigation }) {
         });
       }
 
-      const listSeparator = () => {
-        return (
-            <View style={{
-                height: 1,
-                width: "90%",
-                backgroundColor: "#CED0CE",
-                marginLeft: "5%"
-            }}
-            />
-        )}
+    const listSeparator = () => {
+    return (
+      <View style={{
+        height: 1,
+        width: "90%",
+        backgroundColor: "#CED0CE",
+        marginLeft: "5%"
+       }}/>
+     )}
+
   return (
     <View style={styles.container}>
       <View style={styles.listcontainer}>
@@ -50,16 +49,11 @@ export default function Mainpage({ navigation }) {
           <Text style={{marginBottom:10, fontSize: 15}}>{item.location.address}, {item.location.city.name}</Text>
           <Text style={{ marginBottom: 10, color: '#130DDE' }} onPress={() => { Linking.openURL(item.wwww) }}>Visit website</Text>
           
-           {/* typeCode itselle tiedoksi toistaiseksi*/}
-          {/* <Text style={{marginBottom: 10, fontSize: 15}}>{item.typeCode}</Text>
-          <Button onPress={()  => navigation.navigate('Info', {name: item.name})}
-           title="Lisää tietoa"/> */}
           </Card>
       )}
       ItemSeparatorComponent={listSeparator} data={sportplaces} />
-
     </View>
-    </View>
+</View>
   );
 }
 
@@ -75,6 +69,8 @@ const styles = StyleSheet.create({
   listcontainer: {
     flex: 1,
     padding: 5,
+    justifyContent: 'center',
     backgroundColor: '#7BDCB5',
-  }, 
+  },
+
 })

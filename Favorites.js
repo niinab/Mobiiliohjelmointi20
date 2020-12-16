@@ -3,27 +3,26 @@ import { StyleSheet, Text, View, FlatList, Alert, TextInput} from 'react-native'
 import {Card, Button, Header, ListItem } from 'react-native-elements';
 
 
-export default function Favorites({ navigation }) {
+export default function Favorites({ route, navigation }) {
 
     const [favorite, setFavorite] = useState([]);
-    const [sportplaces, setSportPlaces] = useState([]);
+    const [placetypes, setPlaceTypes] = useState([]);
 
     useEffect(() => {
-        getFavorites()
+        getPlaceTypes()
       }, []);
 
-
-    const getFavorites = () => {
-    fetch(`http://lipas.cc.jyu.fi/api/sports-places`)
-    .then(response => response.json())
-        .then(data => {
-          console.log('success', data)
-          setSportPlaces(data)
-    })
-    .catch((error) => {
-        Alert.alert('something went wrong', error.message)
-        });
-      }
+    const getPlaceTypes = () => {
+      fetch(`http://lipas.cc.jyu.fi/api/sports-places?fields=www&fields=name&fields=location.city.name&fields=location.coordinates.wgs84&fields=location.address&searchString=${search}%20${searchtwo}`)
+      .then(response => response.json())
+      .then(data =>  {
+        console.log('Success', data)
+        setPlaceTypes(data)
+      })
+      .catch((error) => {
+           Alert.alert('Something went wrong:', error.message);
+      });
+    }
 
     const listSeparator = () => {
     return (
@@ -39,27 +38,24 @@ export default function Favorites({ navigation }) {
 return (
     <View style={styles.container}>
       <View style={styles.listcontainer}>
-      <Text style={{ textAlign: 'center', fontSize: 15, padding: 5, fontWeight: 'bold' }}>This is Favorites </Text>
-    
+      <Text style={{ textAlign: 'center', fontSize: 15, padding: 5, fontWeight: 'bold' }}>Your Favorites </Text>
+
       <FlatList
-      style={{marginLeft: "5%", height: 200}}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
+        style={{marginLeft: "5%", height: 200}}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
         
         <Card>
-          <Card.Title>{item.name}</Card.Title>''
-          <Card.Divider/>
-          <Text style={{marginBottom:10, fontSize: 15}}>{item.name}</Text> 
-          {/* <Text style={{marginBottom:10, fontSize: 15}}>{item.location.name}</Text> */}
-          
-           {/* typeCode itselle tiedoksi toistaiseksi*/}
-          {/* <Text style={{marginBottom: 10, fontSize: 15}}>{item.type.typeCode}</Text> */}
-          </Card>
+          <Card.Title>{route.params.name}</Card.Title>
+            <Card.Divider/>
+              <Text style={{marginBottom:10, fontSize: 15}}>{route.params.address}</Text>
+              <Text style={{marginBottom:10, fontSize: 15}}>{route.params.city}</Text> 
+        </Card>
       )}
-      ItemSeparatorComponent={listSeparator} data={sportplaces} />
-
+      ItemSeparatorComponent={listSeparator} data={placetypes}/>
+      
     </View>
-    </View>
+  </View>
   );
 }
 

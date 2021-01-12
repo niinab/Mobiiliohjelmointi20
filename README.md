@@ -16,7 +16,7 @@ Examples of *search* and *add workout* pages
  
  <p align="center">
   <img src="img/sportapp_search.png" width="350" title="search view">
-  <img src="img/sportapp_add_workout.png" width="300" title="save workout">
+  <img src="img/sportapp_add_workout.png" width="350" title="save workout">
 </p>
  
 

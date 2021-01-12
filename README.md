@@ -1,9 +1,11 @@
 # Mobile programming course final project 
 
-App is implemented using [expo](https://expo.io/) and React Native.
+App is implemented by using [expo](https://expo.io/) and React Native.
 
-- With this app user can browse and search sport places in Finland
-- User can filter sport places by sport activity and location
+## With this app 
+
+- User can browse and search sport places in Finland
+- User can search and filter sport places by sport activity and location
 - User can save her/his workouts to app. *Database feature is not at disposal*
 - User can search locations using map view *Map feature is not at disposal*
 

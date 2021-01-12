@@ -13,4 +13,5 @@ In this project I used [Lipas-API] (http://lipas.cc.jyu.fi/api/index.html)
 ## App view
 
 ![search-view](img/sportapp_search.png)
-![save-workout] (img/sportapp_add workout.png)
+
+![save-workout](img/sportapp_add workout.png)

@@ -10,8 +10,10 @@ App is implemented using [expo] (https://expo.io/) and React Native.
 ## API
 In this project I used [Lipas-API] (http://lipas.cc.jyu.fi/api/index.html)
 
-## App view
+## Search view
 
-* ![search-view](img/sportapp_search.png)
+ ![search-view](img/sportapp_search.png)
+ 
+## Save workout view
 
-* ![save-workout](img/sportapp_add workout.png)
+ ![save-workout](img/sportapp_add_workout.png)
